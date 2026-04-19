@@ -14,7 +14,7 @@ import {
 import { formatDateTime } from "@/lib/utils";
 import StatusBadge from "./StatusBadge";
 
-export default function RejectionDialog({ open, mode, data, onClose, onSave, onSubmit, saving }) {
+export default function RejectionDialog({ open, mode, data, onClose, onSave, onSubmit, saving, workflowLevels }) {
   const [header, setHeader] = useState({});
   const [items, setItems] = useState([]);
   const [itemSearch, setItemSearch] = useState("");
@@ -82,9 +82,22 @@ export default function RejectionDialog({ open, mode, data, onClose, onSave, onS
     recalcSummary([]);
   };
 
-  // Rejection type change
+  // Rejection type change - update approver preview from workflow config
   const handleRejectionTypeChange = (rejectionType) => {
     updateHeader("rejectionType", rejectionType);
+    if (!rejectionType) {
+      updateHeader("currentApprover", "");
+      return;
+    }
+    // Show workflow chain preview
+    const levels = workflowLevels || [];
+    if (levels.length) {
+      const preview = levels
+        .map((l) => l.effectiveApproverName || l.approverName || l.effectiveApproverId || l.approverId || "")
+        .filter(Boolean)
+        .join(" > ");
+      updateHeader("currentApprover", preview);
+    }
   };
 
   // Add item

@@ -17,7 +17,7 @@ import { CURRENT_USER } from "@/lib/constants";
 import { validateDocument } from "@/lib/validation";
 import {
   mapSapHeader, generateNextRejectionNo,
-  buildHeaderPayload, buildItemPayload,
+  buildHeaderPayload, buildItemPayload, parseODataDate,
 } from "@/lib/utils";
 
 export default function DashboardPage() {
@@ -130,8 +130,12 @@ export default function DashboardPage() {
       filtered = filtered.filter((d) => d.status === filters.status);
     }
 
-    // Sort by created date descending
-    filtered.sort((a, b) => new Date(b.createdOn).getTime() - new Date(a.createdOn).getTime());
+    // Sort by created date descending (handle OData v2 date format)
+    filtered.sort((a, b) => {
+      const dateA = parseODataDate(a.createdOn);
+      const dateB = parseODataDate(b.createdOn);
+      return (dateB?.getTime() || 0) - (dateA?.getTime() || 0);
+    });
 
     setFilteredDocuments(filtered);
     setSelectedIndex(-1);
@@ -498,6 +502,15 @@ export default function DashboardPage() {
           documents={filteredDocuments}
           selectedIndex={selectedIndex}
           onSelect={setSelectedIndex}
+          onDoubleClick={(index) => {
+            setSelectedIndex(index);
+            const doc = JSON.parse(JSON.stringify(filteredDocuments[index]));
+            if (doc) {
+              setDialogMode("DISPLAY");
+              setDialogData({ header: doc, items: doc.items || [] });
+              setDialogOpen(true);
+            }
+          }}
           loading={loading && !documents.length}
         />
       </main>
@@ -511,6 +524,7 @@ export default function DashboardPage() {
         onSave={handleDialogSave}
         onSubmit={handleDialogSubmit}
         saving={saving}
+        workflowLevels={workflowLevels}
       />
 
       {/* Confirm Dialog */}
@@ -526,6 +540,23 @@ export default function DashboardPage() {
 
       {/* Toast */}
       <Toast toast={toast} onClose={() => setToast(null)} />
+
+      {/* GDPR Footer */}
+      <footer className="border-t border-white/5 mt-8 py-6 px-6">
+        <div className="max-w-[1920px] mx-auto flex flex-wrap items-center justify-between gap-4 text-xs text-slate-500">
+          <span>&copy; {new Date().getFullYear()} Changan Motors Pakistan. All rights reserved.</span>
+          <div className="flex items-center gap-4">
+            <a href="/privacy" className="hover:text-indigo-400 transition-colors">Privacy Policy</a>
+            <a href="/terms" className="hover:text-indigo-400 transition-colors">Terms of Service</a>
+            <button
+              onClick={() => { localStorage.removeItem("gdpr_consent"); window.location.reload(); }}
+              className="hover:text-indigo-400 transition-colors"
+            >
+              Manage Cookies
+            </button>
+          </div>
+        </div>
+      </footer>
     </>
   );
 }

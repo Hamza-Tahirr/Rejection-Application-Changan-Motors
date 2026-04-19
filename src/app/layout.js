@@ -1,8 +1,13 @@
 import "./globals.css";
+import ThemeProvider from "@/components/ThemeProvider";
+import CookieConsent from "@/components/CookieConsent";
 
 export const metadata = {
   title: "Rejection Management | Changan Motors",
   description: "Quality Rejection Document Management System - Changan Motors Pakistan",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({ children }) {
@@ -15,10 +20,13 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className="antialiased">
-        <div className="bg-ambient" />
-        <div className="relative z-10 min-h-screen">
-          {children}
-        </div>
+        <ThemeProvider>
+          <div className="bg-ambient" />
+          <div className="relative z-10 min-h-screen">
+            {children}
+          </div>
+          <CookieConsent />
+        </ThemeProvider>
       </body>
     </html>
   );

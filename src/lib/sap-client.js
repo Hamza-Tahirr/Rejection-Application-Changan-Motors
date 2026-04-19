@@ -9,25 +9,22 @@ function getAuthHeader() {
   return `Basic ${credentials}`;
 }
 
-function getHeaders(extraHeaders = {}) {
-  return {
-    Authorization: getAuthHeader(),
-    Accept: "application/json",
-    "Content-Type": "application/json",
-    "x-csrf-token": "Fetch",
-    ...extraHeaders,
-  };
-}
-
-async function fetchCsrfToken(serviceUrl) {
-  const res = await fetch(`${SAP_BASE_URL}${serviceUrl}`, {
-    method: "HEAD",
+// Fetch CSRF token + session cookies together (SAP requires both)
+async function fetchCsrfAndCookies(servicePath) {
+  const res = await fetch(`${SAP_BASE_URL}${servicePath}/`, {
+    method: "GET",
     headers: {
       Authorization: getAuthHeader(),
       "x-csrf-token": "Fetch",
+      Accept: "application/json",
     },
   });
-  return res.headers.get("x-csrf-token") || "";
+  const csrfToken = res.headers.get("x-csrf-token") || "";
+  // Collect all set-cookie headers
+  const cookies = res.headers.getSetCookie
+    ? res.headers.getSetCookie().map((c) => c.split(";")[0]).join("; ")
+    : (res.headers.get("set-cookie") || "").split(",").map((c) => c.trim().split(";")[0]).filter(Boolean).join("; ");
+  return { csrfToken, cookies };
 }
 
 async function sapGet(servicePath, entityPath, params = {}) {
@@ -41,7 +38,10 @@ async function sapGet(servicePath, entityPath, params = {}) {
 
   const res = await fetch(url.toString(), {
     method: "GET",
-    headers: getHeaders(),
+    headers: {
+      Authorization: getAuthHeader(),
+      Accept: "application/json",
+    },
     cache: "no-store",
   });
 
@@ -54,14 +54,17 @@ async function sapGet(servicePath, entityPath, params = {}) {
 }
 
 async function sapPost(servicePath, entityPath, payload) {
-  const csrfToken = await fetchCsrfToken(servicePath);
+  const { csrfToken, cookies } = await fetchCsrfAndCookies(servicePath);
   const url = `${SAP_BASE_URL}${servicePath}${entityPath}`;
 
   const res = await fetch(url, {
     method: "POST",
     headers: {
-      ...getHeaders(),
+      Authorization: getAuthHeader(),
+      Accept: "application/json",
+      "Content-Type": "application/json",
       "x-csrf-token": csrfToken,
+      Cookie: cookies,
     },
     body: JSON.stringify(payload),
   });
@@ -79,14 +82,17 @@ async function sapPost(servicePath, entityPath, payload) {
 }
 
 async function sapPatch(servicePath, entityPath, payload) {
-  const csrfToken = await fetchCsrfToken(servicePath);
+  const { csrfToken, cookies } = await fetchCsrfAndCookies(servicePath);
   const url = `${SAP_BASE_URL}${servicePath}${entityPath}`;
 
   const res = await fetch(url, {
     method: "PATCH",
     headers: {
-      ...getHeaders(),
+      Authorization: getAuthHeader(),
+      Accept: "application/json",
+      "Content-Type": "application/json",
       "x-csrf-token": csrfToken,
+      Cookie: cookies,
     },
     body: JSON.stringify(payload),
   });
@@ -100,14 +106,16 @@ async function sapPatch(servicePath, entityPath, payload) {
 }
 
 async function sapDelete(servicePath, entityPath) {
-  const csrfToken = await fetchCsrfToken(servicePath);
+  const { csrfToken, cookies } = await fetchCsrfAndCookies(servicePath);
   const url = `${SAP_BASE_URL}${servicePath}${entityPath}`;
 
   const res = await fetch(url, {
     method: "DELETE",
     headers: {
-      ...getHeaders(),
+      Authorization: getAuthHeader(),
+      Accept: "application/json",
       "x-csrf-token": csrfToken,
+      Cookie: cookies,
     },
   });
 

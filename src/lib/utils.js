@@ -4,10 +4,22 @@ export function cn(...inputs) {
   return clsx(inputs);
 }
 
+export function parseODataDate(value) {
+  if (!value) return null;
+  // Handle OData v2 date format: /Date(1775646949920+0000)/
+  const match = /\/Date\((\d+)([+-]\d+)?\)\//.exec(String(value));
+  if (match) {
+    return new Date(parseInt(match[1], 10));
+  }
+  // Handle ISO strings and other formats
+  const date = new Date(value);
+  return isNaN(date.getTime()) ? null : date;
+}
+
 export function formatDateTime(value) {
   if (!value) return "";
-  const date = new Date(value);
-  if (isNaN(date.getTime())) return value;
+  const date = parseODataDate(value);
+  if (!date) return String(value);
   const day = String(date.getDate()).padStart(2, "0");
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const year = date.getFullYear();
@@ -112,8 +124,17 @@ export function mapSapItem(item) {
   };
 }
 
+// Convert JS Date to OData v2 date format: /Date(timestamp)/
+export function toODataDate(value) {
+  if (!value) return null;
+  const d = value instanceof Date ? value : new Date(value);
+  if (isNaN(d.getTime())) return null;
+  return `/Date(${d.getTime()})/`;
+}
+
 export function buildHeaderPayload(header, override = {}) {
   const data = { ...header, ...override };
+  const now = new Date();
   return {
     REJECTION_ID: data.rejectionNo,
     EXCEPTION_NO: data.exceptionHandlingNo,
@@ -139,8 +160,8 @@ export function buildHeaderPayload(header, override = {}) {
     LAST_ACTION: data.lastAction || "",
     LAST_ACTION_BY: data.lastActionBy || "",
     LAST_ACTION_NAME: data.lastActionBy || "",
-    LAST_ACTION_DATE: new Date().toISOString(),
-    LAST_ACTION_TIME: new Date().toISOString(),
+    LAST_ACTION_DATE: toODataDate(now),
+    LAST_ACTION_TIME: toODataDate(now),
     LAST_ACTION_REMARKS: data.lastActionRemarks || "",
   };
 }

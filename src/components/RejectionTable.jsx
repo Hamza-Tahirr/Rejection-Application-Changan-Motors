@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { formatDateTime } from "@/lib/utils";
 import StatusBadge from "./StatusBadge";
 
-export default function RejectionTable({ documents, selectedIndex, onSelect, loading }) {
+export default function RejectionTable({ documents, selectedIndex, onSelect, onDoubleClick, loading }) {
   if (loading) {
     return (
       <div className="glass-card overflow-hidden">
@@ -82,6 +82,7 @@ export default function RejectionTable({ documents, selectedIndex, onSelect, loa
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: Math.min(index * 0.03, 0.5), duration: 0.3 }}
                 onClick={() => onSelect(index)}
+                onDoubleClick={() => onDoubleClick && onDoubleClick(index)}
                 className={`cursor-pointer ${selectedIndex === index ? "selected" : ""}`}
               >
                 <td>
