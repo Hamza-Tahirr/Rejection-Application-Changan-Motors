@@ -29,8 +29,8 @@ export default function PrivacyPolicyPage() {
           <div className="prose-custom space-y-8">
             <Section title="1. Introduction">
               <p>
-                Changan Motors Pakistan (&quot;we&quot;, &quot;our&quot;, &quot;us&quot;) operates the
-                Rejection Management System (&quot;the Application&quot;). This Privacy Policy explains
+                The organization that deploys this Rejection Management System (&quot;we&quot;,
+                &quot;our&quot;, &quot;us&quot;) operates the Application. This Privacy Policy explains
                 how we collect, use, store, and protect your personal data in compliance with the
                 General Data Protection Regulation (GDPR) and applicable data protection laws.
               </p>
@@ -42,9 +42,9 @@ export default function PrivacyPolicyPage() {
 
             <Section title="2. Data Controller">
               <p>
-                The data controller responsible for your personal data is:<br />
-                <strong className="text-white">Changan Motors Pakistan</strong><br />
-                Contact: privacy@changanmotors.pk
+                The data controller responsible for your personal data is the organization
+                operating this Application.<br />
+                Contact: privacy@example.com
               </p>
             </Section>
 
@@ -76,7 +76,7 @@ export default function PrivacyPolicyPage() {
               <ul>
                 <li>
                   <strong className="text-white">Legitimate Interest (Art. 6(1)(f)):</strong> Processing
-                  rejection documents is necessary for quality management operations at Changan Motors.
+                  rejection documents is necessary for day-to-day quality management operations.
                 </li>
                 <li>
                   <strong className="text-white">Consent (Art. 6(1)(a)):</strong> Functional cookies
@@ -116,7 +116,7 @@ export default function PrivacyPolicyPage() {
 
             <Section title="7. Data Retention">
               <p>
-                Rejection documents and audit trails are retained as long as required by Changan Motors&apos;
+                Rejection documents and audit trails are retained as long as required by the organization&apos;s
                 quality management policies and applicable manufacturing regulations. Theme preferences
                 stored in your browser persist until you clear your browser data or withdraw consent.
               </p>
@@ -134,7 +134,7 @@ export default function PrivacyPolicyPage() {
                 <li><strong className="text-white">Right to Withdraw Consent (Art. 7):</strong> Withdraw cookie consent at any time via the settings menu</li>
               </ul>
               <p>
-                To exercise any of these rights, contact us at <strong className="text-indigo-400">privacy@changanmotors.pk</strong>.
+                To exercise any of these rights, contact us at <strong className="text-indigo-400">privacy@example.com</strong>.
                 We will respond within 30 days as required by GDPR.
               </p>
             </Section>
@@ -178,7 +178,7 @@ export default function PrivacyPolicyPage() {
             <Section title="11. Contact">
               <p>
                 For privacy-related inquiries or to exercise your GDPR rights:<br />
-                Email: <strong className="text-indigo-400">privacy@changanmotors.pk</strong><br />
+                Email: <strong className="text-indigo-400">privacy@example.com</strong><br />
                 You also have the right to lodge a complaint with your local Data Protection Authority.
               </p>
             </Section>

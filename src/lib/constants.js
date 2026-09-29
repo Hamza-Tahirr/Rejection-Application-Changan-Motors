@@ -21,11 +21,11 @@ export const DEPARTMENT_LIST = [
 ];
 
 export const LOCATOR_LIST = [
-  { key: "CH01-RM01-A01", label: "CH01-RM01-A01", description: "Plant CH01 / Storage RM01" },
-  { key: "CH01-RM01-B02", label: "CH01-RM01-B02", description: "Plant CH01 / Storage RM01" },
-  { key: "CH01-UNBX-C03", label: "CH01-UNBX-C03", description: "Plant CH01 / Storage UNBX" },
-  { key: "CH01-BODY-D01", label: "CH01-BODY-D01", description: "Plant CH01 / Storage BODY" },
-  { key: "CH01-PAINT-E01", label: "CH01-PAINT-E01", description: "Plant CH01 / Storage PNT1" },
+  { key: "PL01-RM01-A01", label: "PL01-RM01-A01", description: "Plant PL01 / Storage RM01" },
+  { key: "PL01-RM01-B02", label: "PL01-RM01-B02", description: "Plant PL01 / Storage RM01" },
+  { key: "PL01-UNBX-C03", label: "PL01-UNBX-C03", description: "Plant PL01 / Storage UNBX" },
+  { key: "PL01-BODY-D01", label: "PL01-BODY-D01", description: "Plant PL01 / Storage BODY" },
+  { key: "PL01-PAINT-E01", label: "PL01-PAINT-E01", description: "Plant PL01 / Storage PNT1" },
 ];
 
 export const REJECTION_TYPE_LIST = [
@@ -72,7 +72,7 @@ export const REASON_LIST = [
   { code: "919", text: "Welding Problem", categoryKey: "QUALITY" },
   { code: "920", text: "Wrong Dimension", categoryKey: "WRONG" },
   { code: "921", text: "Scratch", categoryKey: "DAMAGE" },
-  { code: "922", text: "Shortage (By Changan)", categoryKey: "SHORT" },
+  { code: "922", text: "Shortage (By OEM)", categoryKey: "SHORT" },
   { code: "923", text: "Adhesive Adding", categoryKey: "REPAIR_ACTION" },
   { code: "924", text: "Cleaning", categoryKey: "REPAIR_ACTION" },
   { code: "925", text: "Cutting", categoryKey: "REPAIR_ACTION" },
@@ -127,7 +127,7 @@ export const REASON_LIST = [
   { code: "974", text: "WELDING PROBLEM", categoryKey: "QUALITY" },
   { code: "975", text: "WRONG DIMENSION", categoryKey: "WRONG" },
   { code: "976", text: "SCRATCH", categoryKey: "DAMAGE" },
-  { code: "977", text: "SHORTAGE (BY CHANGAN)", categoryKey: "SHORT" },
+  { code: "977", text: "SHORTAGE (BY OEM)", categoryKey: "SHORT" },
   { code: "978", text: "DEFECTIVE", categoryKey: "QUALITY" },
   { code: "979", text: "EXPIRED", categoryKey: "OTHER" },
   { code: "980", text: "RUST", categoryKey: "RUSTED" },
@@ -150,9 +150,9 @@ export const REASON_LIST = [
 export const DPL_BATCHES = [
   {
     exceptionHandlingNo: "EH-2026-00021",
-    modelName: "OUSHAN X7",
+    modelName: "SUV X7",
     batchNumber: "BATCH-X7-001",
-    defaultLocator: "CH01-RM01-A01",
+    defaultLocator: "PL01-RM01-A01",
     parts: [
       { partNo: "X7-ENG-001", materialCode: "100000001", description: "Engine Mount Front", uom: "EA", availableQty: 12, defaultCategory: "QUALITY" },
       { partNo: "X7-BDY-014", materialCode: "100000014", description: "Rear Door Inner Panel", uom: "EA", availableQty: 6, defaultCategory: "DAMAGE" },
@@ -163,28 +163,28 @@ export const DPL_BATCHES = [
   },
   {
     exceptionHandlingNo: "EH-2026-00034",
-    modelName: "ALSVIN",
-    batchNumber: "BATCH-ALS-003",
-    defaultLocator: "CH01-BODY-D01",
+    modelName: "SEDAN S3",
+    batchNumber: "BATCH-SDN-003",
+    defaultLocator: "PL01-BODY-D01",
     parts: [
-      { partNo: "ALS-BDY-003", materialCode: "100000103", description: "Bonnet Panel", uom: "EA", availableQty: 7, defaultCategory: "DAMAGE" },
-      { partNo: "ALS-ASM-011", materialCode: "100000111", description: "Instrument Cluster Frame", uom: "EA", availableQty: 15, defaultCategory: "QUALITY" },
-      { partNo: "ALS-WHS-017", materialCode: "100000117", description: "Main Wiring Harness", uom: "EA", availableQty: 9, defaultCategory: "QUALITY" },
-      { partNo: "ALS-PAI-022", materialCode: "100000122", description: "Door Trim Painted LH", uom: "EA", availableQty: 13, defaultCategory: "DAMAGE" },
-      { partNo: "ALS-RUB-031", materialCode: "100000131", description: "Pedal Rubber Cover", uom: "EA", availableQty: 25, defaultCategory: "WARRANTY" },
+      { partNo: "SDN-BDY-003", materialCode: "100000103", description: "Bonnet Panel", uom: "EA", availableQty: 7, defaultCategory: "DAMAGE" },
+      { partNo: "SDN-ASM-011", materialCode: "100000111", description: "Instrument Cluster Frame", uom: "EA", availableQty: 15, defaultCategory: "QUALITY" },
+      { partNo: "SDN-WHS-017", materialCode: "100000117", description: "Main Wiring Harness", uom: "EA", availableQty: 9, defaultCategory: "QUALITY" },
+      { partNo: "SDN-PAI-022", materialCode: "100000122", description: "Door Trim Painted LH", uom: "EA", availableQty: 13, defaultCategory: "DAMAGE" },
+      { partNo: "SDN-RUB-031", materialCode: "100000131", description: "Pedal Rubber Cover", uom: "EA", availableQty: 25, defaultCategory: "WARRANTY" },
     ],
   },
   {
     exceptionHandlingNo: "EH-2026-00055",
-    modelName: "KARVAAN",
-    batchNumber: "BATCH-KRV-007",
-    defaultLocator: "CH01-UNBX-C03",
+    modelName: "VAN V7",
+    batchNumber: "BATCH-VAN-007",
+    defaultLocator: "PL01-UNBX-C03",
     parts: [
-      { partNo: "KRV-BDY-004", materialCode: "100000204", description: "Sliding Door Shell", uom: "EA", availableQty: 4, defaultCategory: "DAMAGE" },
-      { partNo: "KRV-ENG-008", materialCode: "100000208", description: "Air Filter Housing", uom: "EA", availableQty: 18, defaultCategory: "QUALITY" },
-      { partNo: "KRV-WHL-016", materialCode: "100000216", description: "Wheel Arch Liner", uom: "EA", availableQty: 16, defaultCategory: "SUPPLY_SIDE" },
-      { partNo: "KRV-PAI-026", materialCode: "100000226", description: "Front Bumper Painted", uom: "EA", availableQty: 10, defaultCategory: "DAMAGE" },
-      { partNo: "KRV-GLS-034", materialCode: "100000234", description: "Quarter Glass", uom: "EA", availableQty: 11, defaultCategory: "QUALITY" },
+      { partNo: "VAN-BDY-004", materialCode: "100000204", description: "Sliding Door Shell", uom: "EA", availableQty: 4, defaultCategory: "DAMAGE" },
+      { partNo: "VAN-ENG-008", materialCode: "100000208", description: "Air Filter Housing", uom: "EA", availableQty: 18, defaultCategory: "QUALITY" },
+      { partNo: "VAN-WHL-016", materialCode: "100000216", description: "Wheel Arch Liner", uom: "EA", availableQty: 16, defaultCategory: "SUPPLY_SIDE" },
+      { partNo: "VAN-PAI-026", materialCode: "100000226", description: "Front Bumper Painted", uom: "EA", availableQty: 10, defaultCategory: "DAMAGE" },
+      { partNo: "VAN-GLS-034", materialCode: "100000234", description: "Quarter Glass", uom: "EA", availableQty: 11, defaultCategory: "QUALITY" },
     ],
   },
 ];

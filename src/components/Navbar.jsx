@@ -27,7 +27,7 @@ export default function Navbar() {
           </div>
           <div>
             <h1 className="text-lg font-bold text-white leading-tight">
-              Changan <span className="gradient-text">Motors</span>
+              Quality <span className="gradient-text">Rejections</span>
             </h1>
             <p className="text-[10px] text-slate-500 uppercase tracking-widest -mt-0.5">
               Rejection Management

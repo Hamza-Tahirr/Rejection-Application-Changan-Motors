@@ -65,7 +65,7 @@ export default function PageLoader({ loading }) {
                   transition={{ duration: 2, repeat: Infinity }}
                   className="text-3xl font-black gradient-text"
                 >
-                  CM
+                  RM
                 </motion.span>
               </div>
             </div>
@@ -78,7 +78,7 @@ export default function PageLoader({ loading }) {
                 transition={{ delay: 0.2, duration: 0.5 }}
                 className="text-2xl font-bold gradient-text"
               >
-                Changan Motors
+                Rejection Management
               </motion.h1>
               <motion.p
                 initial={{ y: 20, opacity: 0 }}
@@ -86,7 +86,7 @@ export default function PageLoader({ loading }) {
                 transition={{ delay: 0.4, duration: 0.5 }}
                 className="text-sm text-slate-400 mt-2"
               >
-                Rejection Management System
+                Quality Rejection Documents
               </motion.p>
             </div>
 

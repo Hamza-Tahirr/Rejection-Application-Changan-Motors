@@ -3,8 +3,8 @@ import ThemeProvider from "@/components/ThemeProvider";
 import CookieConsent from "@/components/CookieConsent";
 
 export const metadata = {
-  title: "Rejection Management | Changan Motors",
-  description: "Quality Rejection Document Management System - Changan Motors Pakistan",
+  title: "Rejection Management",
+  description: "Quality rejection document management on SAP S/4HANA Public Cloud",
   icons: {
     icon: "/favicon.svg",
   },

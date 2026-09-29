@@ -30,8 +30,8 @@ export default function TermsOfServicePage() {
             <Section title="1. Acceptance of Terms">
               <p>
                 These Terms of Service (&quot;Terms&quot;) govern your access to and use of the
-                Rejection Management System (&quot;the Application&quot;) provided by Changan Motors
-                Pakistan (&quot;we&quot;, &quot;our&quot;, &quot;us&quot;). By accessing or using the
+                Rejection Management System (&quot;the Application&quot;) provided by the organization
+                operating it (&quot;we&quot;, &quot;our&quot;, &quot;us&quot;). By accessing or using the
                 Application, you agree to be bound by these Terms. If you do not agree, do not use
                 the Application.
               </p>
@@ -40,7 +40,7 @@ export default function TermsOfServicePage() {
             <Section title="2. Authorized Use">
               <p>
                 The Application is intended exclusively for authorized employees, contractors, and
-                partners of Changan Motors Pakistan who have been granted SAP S/4HANA system access.
+                partners of the operating organization who have been granted SAP S/4HANA system access.
                 You must not share your access credentials with unauthorized individuals.
               </p>
               <ul>
@@ -61,9 +61,9 @@ export default function TermsOfServicePage() {
 
             <Section title="4. Intellectual Property">
               <p>
-                The Application, including its design, codebase, and user interface, is the intellectual
-                property of Changan Motors Pakistan. You may not reproduce, distribute, modify, or create
-                derivative works from any part of the Application without written permission.
+                The source code of the Application is released under the MIT License. Business data
+                entered into the Application remains the property of the operating organization and may
+                not be copied or shared outside of it without written permission.
               </p>
             </Section>
 
@@ -88,7 +88,7 @@ export default function TermsOfServicePage() {
 
             <Section title="7. Limitation of Liability">
               <p>
-                To the maximum extent permitted by applicable law, Changan Motors Pakistan shall not be
+                To the maximum extent permitted by applicable law, the operating organization shall not be
                 liable for any indirect, incidental, special, consequential, or punitive damages arising
                 from your use of the Application, including but not limited to data loss, business
                 interruption, or manufacturing delays.
@@ -97,7 +97,7 @@ export default function TermsOfServicePage() {
 
             <Section title="8. Indemnification">
               <p>
-                You agree to indemnify and hold harmless Changan Motors Pakistan and its officers,
+                You agree to indemnify and hold harmless the operating organization and its officers,
                 directors, employees, and agents from any claims, damages, or expenses arising from
                 your violation of these Terms or misuse of the Application.
               </p>
@@ -113,16 +113,16 @@ export default function TermsOfServicePage() {
 
             <Section title="10. Governing Law">
               <p>
-                These Terms are governed by the laws of Pakistan and applicable international data
-                protection regulations including GDPR. Any disputes shall be resolved through the
-                competent courts of Pakistan.
+                These Terms are governed by the laws of the country in which the operating organization
+                is registered and applicable international data protection regulations including GDPR.
+                Any disputes shall be resolved through the competent courts of that country.
               </p>
             </Section>
 
             <Section title="11. Contact">
               <p>
                 For questions about these Terms:<br />
-                Email: <strong className="text-indigo-400">legal@changanmotors.pk</strong>
+                Email: <strong className="text-indigo-400">legal@example.com</strong>
               </p>
             </Section>
           </div>
