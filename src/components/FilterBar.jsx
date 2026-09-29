@@ -3,8 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Filter, ChevronDown, X, RotateCcw } from "lucide-react";
 import { useState } from "react";
-import { STATUS_LIST, DEPARTMENT_LIST, REJECTION_TYPE_LIST } from "@/lib/constants";
-import { getModelList } from "@/lib/constants";
+import { STATUS_LIST, DEPARTMENT_LIST, REJECTION_TYPE_LIST, getModelList } from "@/lib/constants";
 
 export default function FilterBar({ filters, onFilterChange, onSearch, onClear, totalCount }) {
   const [expanded, setExpanded] = useState(false);

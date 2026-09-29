@@ -8,7 +8,7 @@ export async function GET(request) {
 
     const params = {};
     if (rejectionId) {
-      params.$filter = `REJECTION_ID eq '${rejectionId}'`;
+      params.$filter = `REJECTION_ID eq '${rejectionId.replace(/'/g, "''")}'`;
     }
 
     const data = await sapGet(REJECTION_SERVICE, "/YY1_YY1_REJ_ITM_REJECTION_DOC", params);

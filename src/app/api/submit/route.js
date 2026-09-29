@@ -1,9 +1,6 @@
 import { NextResponse } from "next/server";
 import { sapPatch, guidPath, REJECTION_SERVICE } from "@/lib/sap-client";
-
-function toODataDate(d) {
-  return `/Date(${d.getTime()})/`;
-}
+import { toODataDate } from "@/lib/utils";
 
 export async function POST(request) {
   try {

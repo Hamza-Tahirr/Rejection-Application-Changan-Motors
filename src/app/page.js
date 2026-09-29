@@ -20,6 +20,15 @@ import {
   buildHeaderPayload, buildItemPayload, parseODataDate,
 } from "@/lib/utils";
 
+async function requestJson(url, options) {
+  const res = await fetch(url, options);
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok || data.error) {
+    throw new Error(data.error || `Request failed (${res.status})`);
+  }
+  return data;
+}
+
 export default function DashboardPage() {
   // ─── State ─────────────────────────────────────────────────────────────
   const [pageLoading, setPageLoading] = useState(true);
@@ -314,27 +323,27 @@ export default function DashboardPage() {
       let savedUuid = header.sapUuid;
 
       if (header.sapUuid) {
-        await fetch(`/api/rejections/${header.sapUuid}`, {
+        await requestJson(`/api/rejections/${header.sapUuid}`, {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
       } else {
-        const res = await fetch("/api/rejections", {
+        const result = await requestJson("/api/rejections", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
-        const result = await res.json();
-        savedUuid = result?.d?.SAP_UUID || header.sapUuid;
+        savedUuid = result?.d?.SAP_UUID;
       }
+      if (!savedUuid) throw new Error("SAP did not return a document UUID.");
 
-      // Save items
-      if (savedUuid && items.length) {
+      // Existing documents are synced even without items so removed lines are deleted in SAP
+      if (items.length || header.sapUuid) {
         const itemPayloads = items.map((item) =>
           buildItemPayload(savedUuid, header.rejectionNo, item, "Draft")
         );
-        await fetch("/api/rejection-items", {
+        await requestJson("/api/rejection-items", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ parentUuid: savedUuid, items: itemPayloads }),
@@ -376,51 +385,46 @@ export default function DashboardPage() {
       let savedUuid = header.sapUuid;
 
       if (header.sapUuid) {
-        await fetch(`/api/rejections/${header.sapUuid}`, {
+        await requestJson(`/api/rejections/${header.sapUuid}`, {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(savePayload),
         });
       } else {
-        const res = await fetch("/api/rejections", {
+        const result = await requestJson("/api/rejections", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(savePayload),
         });
-        const result = await res.json();
-        savedUuid = result?.d?.SAP_UUID || header.sapUuid;
+        savedUuid = result?.d?.SAP_UUID;
       }
+      if (!savedUuid) throw new Error("SAP did not return a document UUID.");
 
-      // Save items
-      if (savedUuid && items.length) {
-        const itemPayloads = items.map((item) =>
-          buildItemPayload(savedUuid, header.rejectionNo, item, "Pending Approval")
-        );
-        await fetch("/api/rejection-items", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ parentUuid: savedUuid, items: itemPayloads }),
-        });
-      }
+      const itemPayloads = items.map((item) =>
+        buildItemPayload(savedUuid, header.rejectionNo, item, "Pending Approval")
+      );
+      await requestJson("/api/rejection-items", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ parentUuid: savedUuid, items: itemPayloads }),
+      });
 
       // Then submit for approval
-      if (savedUuid) {
-        const firstLevel = workflowLevels.find((l) => l.levelNo === 1) || workflowLevels[0];
-        await fetch("/api/submit", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            uuid: savedUuid,
-            workflowInfo: {
-              totalLevel: workflowLevels.length,
-              currentLevel: firstLevel.levelNo || 1,
-              currentApproverId: firstLevel.effectiveApproverId || "",
-              currentApproverName: firstLevel.effectiveApproverName || "",
-            },
-            currentUser: CURRENT_USER,
-          }),
-        });
-      }
+      const firstLevel = workflowLevels.find((l) => l.levelNo === 1) || workflowLevels[0];
+      await requestJson("/api/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          uuid: savedUuid,
+          workflowInfo: {
+            totalLevel: workflowLevels.length,
+            currentLevel: firstLevel.levelNo || 1,
+            currentApproverId: firstLevel.effectiveApproverId || "",
+            currentApproverName: firstLevel.effectiveApproverName || "",
+          },
+          currentUser: CURRENT_USER,
+        }),
+      });
 
       await loadDocuments();
       setDialogOpen(false);

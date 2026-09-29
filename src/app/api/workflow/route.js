@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
 import { sapGet, WORKFLOW_SERVICE } from "@/lib/sap-client";
+import { REJECTION_DOC_TYPE } from "@/lib/constants";
 
 export async function GET() {
   try {
     const data = await sapGet(WORKFLOW_SERVICE, "/YY1_ZPXP_WF_CONFIG", {
-      $filter: "DocType eq '02'",
+      $filter: `DocType eq '${REJECTION_DOC_TYPE}'`,
     });
     const results = (data?.d?.results || [])
       .filter((row) => row.IsActive === true || row.IsActive === "true" || row.IsActive === "X")
